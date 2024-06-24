@@ -4,28 +4,29 @@ import type { ModalProps } from "./interface";
 import "./modal.scss";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-// let mousePosition: { x: number; y: number } | null;
+let mousePosition: { x: number; y: number } | null;
 
-// document.documentElement.addEventListener(
-//   "click",
-//   (e) => {
-//     mousePosition = {
-//       x: e.clientX,
-//       y: e.clientY,
-//     };
+document.documentElement.addEventListener(
+  "click",
+  (e) => {
+    mousePosition = {
+      x: e.clientX,
+      y: e.clientY,
+    };
 
-//     setTimeout(() => {
-//       mousePosition = null;
-//     }, 100);
-//   },
-//   true
-// );
+    setTimeout(() => {
+      mousePosition = null;
+    }, 100);
+  },
+  true
+);
 
 export const Modal = (props: ModalProps) => {
   const { open, onCancel, children, afterClose } = props;
 
   const [animatedVisible, setAnimatedVisible] = useState(false);
   const [originGot, setOriginGot] = useState(false)
+  const [transformOrigin, setTransformOrigin] = useState('center')
 
   useEffect(() => {
     if (open) {
@@ -40,6 +41,8 @@ export const Modal = (props: ModalProps) => {
     if (open) {
       const rect = contentRef.current?.getBoundingClientRect()
       console.warn('pos', rect)
+
+      setTransformOrigin(mousePosition === null || !rect ? 'center' : `${mousePosition.x - rect.left}px ${mousePosition.y - rect.top}px`)
       setOriginGot(true)
     }
   }, [open])
@@ -57,6 +60,9 @@ export const Modal = (props: ModalProps) => {
               "modal-content-enter-active": open && originGot,
               "modal-content-leave": !open,
             })}
+            style={{
+              transformOrigin,
+            }}
             onAnimationEnd={() => {
               if (open) {
                 return;
