@@ -2,12 +2,12 @@ import { useLayoutEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 
 interface PortalProps {
-  visible: boolean;
+  open: boolean;
   children: React.ReactNode;
 }
 
 export const Portal: React.FC<PortalProps> = (props) => {
-  const { visible, children } = props;
+  const { open, children } = props;
 
   const container = useMemo(() => {
     const elem = document.createElement("div");
@@ -25,14 +25,14 @@ export const Portal: React.FC<PortalProps> = (props) => {
   }
 
   useLayoutEffect(() => {
-    if (visible) {
+    if (open) {
       append();
     } else {
       cleanup();
     }
 
     return cleanup;
-  }, [visible]);
+  }, [open]);
 
   return createPortal(children, container);
 };

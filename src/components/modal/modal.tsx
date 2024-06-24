@@ -1,17 +1,12 @@
 import { Portal } from "../portal";
+import type { ModalProps } from "./interface";
 import "./modal.scss";
 
-export interface ModalProps {
-  visible: boolean;
-  children: React.ReactNode;
-  onClose: () => void;
-}
-
 export const Modal = (props: ModalProps) => {
-  const { visible, onClose, children } = props;
+  const { open, onClose, children } = props;
 
   return (
-    <Portal visible={visible}>
+    <Portal open={open}>
       <div>
         <div className="modal-mask" />
         <div className="modal-wrap">

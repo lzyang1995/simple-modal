@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Modal } from "./components/modal/modal";
+import { Modal } from "./components/modal";
 
 function App() {
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <div>
@@ -10,16 +10,29 @@ function App() {
         点击显示Modal:
         <button
           onClick={() => {
-            setVisible(true);
+            setOpen(true);
+          }}
+        >
+          show Modal
+        </button>
+      </div>
+      <div>
+        点击通过Modal.info显示Modal:
+        <button
+          onClick={() => {
+            Modal.info({
+              content: "test Modal.info",
+              onClose: () => console.warn("closed!"),
+            });
           }}
         >
           show Modal
         </button>
       </div>
       <Modal
-        visible={visible}
+        open={open}
         onClose={() => {
-          setVisible(false);
+          setOpen(false);
         }}
       >
         test
