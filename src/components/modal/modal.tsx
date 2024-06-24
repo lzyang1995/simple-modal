@@ -25,10 +25,13 @@ export const Modal = (props: ModalProps) => {
   const { open, onCancel, children, afterClose } = props;
 
   const [animatedVisible, setAnimatedVisible] = useState(false);
+  const [originGot, setOriginGot] = useState(false)
 
   useEffect(() => {
     if (open) {
       setAnimatedVisible(true);
+    } else {
+      setOriginGot(false)
     }
   }, [open]);
 
@@ -37,6 +40,7 @@ export const Modal = (props: ModalProps) => {
     if (open) {
       const rect = contentRef.current?.getBoundingClientRect()
       console.warn('pos', rect)
+      setOriginGot(true)
     }
   }, [open])
 
@@ -49,6 +53,8 @@ export const Modal = (props: ModalProps) => {
             ref={contentRef}
             className={classNames("modal-content", {
               "modal-content-enter": open,
+              "modal-content-enter-prepare": open && !originGot,
+              "modal-content-enter-active": open && originGot,
               "modal-content-leave": !open,
             })}
             onAnimationEnd={() => {

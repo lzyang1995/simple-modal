@@ -26,10 +26,20 @@
     padding: 20px 24px;
 
     &-enter {
-      animation-name: zoomIn;
       animation-duration: 0.3s;
       animation-timing-function: ease-out;
       animation-fill-mode: both;
+
+      &-prepare {
+        animation-play-state: paused;
+        transform: none;
+        opacity: 0;
+      }
+
+      &-active {
+        animation-name: zoomIn;
+        animation-play-state: running;
+      }
     }
 
     &-leave {
