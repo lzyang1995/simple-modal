@@ -1,0 +1,31 @@
+.modal-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(55, 55, 55, 0.6);
+}
+
+.modal-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+.modal-content {
+    position: relative;
+    top: 100px;
+    margin: 0 auto;
+    width: 416px;
+    max-width: 100vw;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px 24px;
+}
+
+.modal-btn-container {
+    text-align: right;
+}
