@@ -18,11 +18,12 @@ function App() {
       </div>
       <Modal
         visible={visible}
-        content="test"
         onClose={() => {
           setVisible(false);
         }}
-      />
+      >
+        test
+      </Modal>
     </div>
   );
 }
