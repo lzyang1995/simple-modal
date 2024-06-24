@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { Portal } from "../portal";
 import type { ModalProps } from "./interface";
 import "./modal.scss";
@@ -10,7 +11,12 @@ export const Modal = (props: ModalProps) => {
       <div>
         <div className="modal-mask" />
         <div className="modal-wrap">
-          <div className="modal-content">
+          <div
+            className={classNames("modal-content", {
+              "modal-content-enter": open,
+              "modal-content-leave": !open,
+            })}
+          >
             <div>{children}</div>
             <div className="modal-btn-container">
               <button onClick={onClose}>close</button>
