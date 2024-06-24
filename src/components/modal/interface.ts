@@ -1,5 +1,6 @@
 interface ModalCommonProps {
-  onClose: () => void;
+  onCancel?: () => void;
+  afterClose?: () => void
 }
 
 export interface ModalProps extends ModalCommonProps {

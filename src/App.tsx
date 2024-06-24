@@ -22,7 +22,7 @@ function App() {
           onClick={() => {
             Modal.info({
               content: "test Modal.info",
-              onClose: () => console.warn("closed!"),
+              onCancel: () => console.warn("closed!"),
             });
           }}
         >
@@ -31,7 +31,7 @@ function App() {
       </div>
       <Modal
         open={open}
-        onClose={() => {
+        onCancel={() => {
           setOpen(false);
         }}
       >

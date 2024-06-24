@@ -2,12 +2,21 @@ import classNames from "classnames";
 import { Portal } from "../portal";
 import type { ModalProps } from "./interface";
 import "./modal.scss";
+import { useEffect, useState } from "react";
 
 export const Modal = (props: ModalProps) => {
-  const { open, onClose, children } = props;
+  const { open, onCancel, children, afterClose } = props;
+
+  const [animatedVisible, setAnimatedVisible] = useState(false)
+
+  useEffect(() => {
+    if (open) {
+      setAnimatedVisible(true)
+    }
+  }, [open])
 
   return (
-    <Portal open={open}>
+    <Portal open={open || animatedVisible}>
       <div>
         <div className="modal-mask" />
         <div className="modal-wrap">
@@ -16,10 +25,19 @@ export const Modal = (props: ModalProps) => {
               "modal-content-enter": open,
               "modal-content-leave": !open,
             })}
+            onAnimationEnd={() => {
+              if (open) {
+                return
+              }
+
+              console.warn('animation end')
+              setAnimatedVisible(false)
+              afterClose?.()
+            }}
           >
             <div>{children}</div>
             <div className="modal-btn-container">
-              <button onClick={onClose}>close</button>
+              <button onClick={onCancel}>cancel</button>
             </div>
           </div>
         </div>

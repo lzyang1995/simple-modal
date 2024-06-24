@@ -32,7 +32,7 @@ export function info(config: ModalFuncProps) {
       reactRender(
         <Modal
           {...rest}
-          onClose={() => {
+          onCancel={() => {
             close();
           }}
         >
@@ -43,14 +43,21 @@ export function info(config: ModalFuncProps) {
     });
   }
 
-  function close() {
-    currentConfig = { ...currentConfig, open: false };
-    render(currentConfig);
+  function destroy() {
+    config.onCancel?.();
+    container[MARK]?.unmount();
+  }
 
-    setTimeout(() => {
-      currentConfig.onClose?.();
-      container[MARK]?.unmount();
-    });
+  function close() {
+    currentConfig = {
+      ...currentConfig,
+      open: false,
+      afterClose: () => {
+        config.afterClose?.();
+        destroy();
+      },
+    };
+    render(currentConfig);
   }
 
   render(currentConfig);
