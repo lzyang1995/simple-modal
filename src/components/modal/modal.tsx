@@ -1,8 +1,7 @@
-import classNames from "classnames";
 import { Portal } from "../portal";
 import type { ModalProps } from "./interface";
 import "./modal.scss";
-import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CSSMotion } from "../css-motion";
 
 let mousePosition: { x: number; y: number } | null;
@@ -22,14 +21,6 @@ document.documentElement.addEventListener(
   true
 );
 
-const Div = forwardRef((props: any, ref: any) => {
-  useEffect(() => {
-    console.warn(props.className)
-  }, [props.className])
-  
-  return <div ref={ref} {...props} />
-})
-
 export const Modal = (props: ModalProps) => {
   const { open, onCancel, children, afterClose } = props;
 
@@ -47,7 +38,11 @@ export const Modal = (props: ModalProps) => {
   return (
     <Portal open={open || animatedVisible}>
       <div>
-        <div className="modal-mask" />
+        <CSSMotion motionName="modal-mask" visible={open}>
+          {(classname, ref) => {
+            return <div ref={ref} className={classname} />;
+          }}
+        </CSSMotion>
         <div className="modal-wrap">
           <CSSMotion
             motionName="modal-content"
@@ -76,7 +71,7 @@ export const Modal = (props: ModalProps) => {
           >
             {(classname, ref) => {
               return (
-                <Div
+                <div
                   ref={ref}
                   className={classname}
                   style={{
@@ -87,7 +82,7 @@ export const Modal = (props: ModalProps) => {
                   <div className="modal-btn-container">
                     <button onClick={onCancel}>cancel</button>
                   </div>
-                </Div>
+                </div>
               );
             }}
           </CSSMotion>

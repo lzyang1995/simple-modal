@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useStep } from "./use-step";
 import { CSSMotionProps, Status, StepStatus } from "./interface";
 import { useEvent } from "./use-event";
@@ -36,7 +36,9 @@ export function useStatus(
   });
 
   const isMounted = useRef(false);
-  useEffect(() => {
+
+  // 这里必须用useLayoutEffect，否则会有闪动
+  useLayoutEffect(() => {
     if (visible) {
       setStatus(Status.ENTER);
       startStep();
