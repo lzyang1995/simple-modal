@@ -52,13 +52,11 @@ export const Modal = (props: ModalProps) => {
                 return;
               }
 
-              console.warn("animation end");
               setAnimatedVisible(false);
               afterClose?.();
             }}
             onEnterPrepare={() => {
               const rect = contentRef.current?.getBoundingClientRect();
-              console.warn("pos", rect);
               setTransformOrigin(
                 mousePosition === null || !rect
                   ? "center"
